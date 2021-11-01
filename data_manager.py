@@ -22,14 +22,14 @@ def create_new_data_dict(weight: float, user: str ='Mateusz') -> dict:
     }
     return new_data
 
-def add_new_data(weight: float, user: str ='Mateusz') -> None:
+def add_new_data(weight: float, user: str ='Mateusz'):
     new_data_dict = create_new_data_dict(weight, user)
     with sql.connect('data/data.db') as conn:
         conn.execute(QUERY_INSERT_DICT, new_data_dict)
         conn.commit()
     return 
 
-def clean_database() -> None:
+def clean_database():
     with sql.connect('data/data.db') as conn:
         q_remove = 'DELETE FROM weight'
         q_vacum = 'VACUUM'
@@ -42,11 +42,8 @@ def clean_database() -> None:
 
 
 if __name__ == '__main__':
-    # add_new_data({'report_date':'2021-10-24', 'weight':80})
-    # read_data()
-    # df = import_data()
-    clean_database()
+    # clean_database()
     # add_new_data(81.5)
     # add_new_data(82.5)
     # add_new_data(83.5)
-    # print(import_data())
+    print(import_data())

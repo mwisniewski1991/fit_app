@@ -1,10 +1,10 @@
 from dash import dcc, html
 import plotly.graph_objects as go
-import tabs.data as datamw
+import data_manager
 
 def weight_tracker_frame():
 
-    weight_df = datamw.import_data()
+    weight_df = data_manager.import_data()
 
     colors = {
         'grid_color': 'rgba(0, 0, 0, 0.25)',
@@ -13,19 +13,19 @@ def weight_tracker_frame():
     }
     
     weight_trace = go.Scatter(
-        x=weight_df['report_date'],
+        x=weight_df['report_time'],
         y=weight_df['weight'],
         line_color=colors['white'])
 
-    layout = {
+    weight_layout = {
         'title': {'text': 'Weight tracker', 'color': colors['white']}, 
         'font': {'family':'Georama', 'color': colors['white']},
         'paper_bgcolor': colors['transparent'],
         'plot_bgcolor': colors['transparent'],
-        'xaxis': {'showline':False, 'gridcolor': colors['grid_color']},
+        'xaxis': {'showline':False, 'gridcolor': colors['grid_color'], 'tickformat': '%Y-%m-%d', 'ticklabelmode': 'period'},
         'yaxis': {'showline':True, 'gridcolor': colors['grid_color']},
         'margin_b': 10, 'margin_t': 50, 'margin_r': 10,
-        'margin': {'b': 40, 't': 50, 'r': 50, 'l': 20},
+        'margin': {'b': 40, 't': 50, 'r': 50, 'l': 40},
         'showlegend': False,
     }
 
@@ -43,9 +43,9 @@ def weight_tracker_frame():
             ]),
 
             html.Div(className='charts', children=[
-            dcc.Graph(figure={'data':[weight_trace], 'layout':layout }, 
-                # config={'displayModeBar': False},
-                config={'modeBarButtonsToRemove': ['pan2d', 'lasso2d']}
+            dcc.Graph(figure={'data':[weight_trace], 'layout': weight_layout }, 
+                config={'displayModeBar': False},
+                # config={'modeBarButtonsToRemove': ['pan2d', 'lasso2d']}
                 )
             ])
         ])
