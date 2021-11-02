@@ -1,5 +1,5 @@
 import sqlite3 as sql
-from datetime import datetime 
+from datetime import datetime, time, timedelta
 import pandas as pd
 
 TIME_FORMAT = '%Y-%m-%d %H:%M'
@@ -13,6 +13,12 @@ def import_data() -> pd.DataFrame:
     with sql.connect('data/data.db') as conn:
         return pd.read_sql(QUERY_SELECT, conn)
 
+def read_last_date():
+    q = 'SELECT MAX(report_time) FROM weight'
+    with sql.connect('data/data.db') as conn:
+        result = conn.execute(q).fetchone()[0]
+        return datetime.strptime(result, TIME_FORMAT) 
+
 def create_new_data_dict(weight: float, user: str ='Mateusz') -> dict:
     current_time_str =  datetime.now().strftime(TIME_FORMAT)
     new_data = {
@@ -22,8 +28,22 @@ def create_new_data_dict(weight: float, user: str ='Mateusz') -> dict:
     }
     return new_data
 
+def create_new_data_dict_TEST(weight: float, user: str ='Mateusz') -> dict:
+    last_time = read_last_date()
+    new_time = last_time + timedelta(1) 
+    current_time_str =  new_time.strftime(TIME_FORMAT)
+
+    new_data = {
+        'report_time': current_time_str,
+        'weight': weight,
+        'who': user
+    }
+    return new_data
+
+
 def add_new_data(weight: float, user: str ='Mateusz'):
-    new_data_dict = create_new_data_dict(weight, user)
+    # new_data_dict = create_new_data_dict(weight, user)
+    new_data_dict = create_new_data_dict_TEST(weight, user)
     with sql.connect('data/data.db') as conn:
         conn.execute(QUERY_INSERT_DICT, new_data_dict)
         conn.commit()
@@ -43,7 +63,5 @@ def clean_database():
 
 if __name__ == '__main__':
     # clean_database()
-    # add_new_data(81.5)
-    # add_new_data(82.5)
-    # add_new_data(83.5)
+    # add_new_data(82.6)
     print(import_data())
