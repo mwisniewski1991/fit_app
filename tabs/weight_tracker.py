@@ -62,7 +62,7 @@ def weight_tracker_frame():
             html.Div(className='charts', children=[
             dcc.Graph(id='weight_chart',
                 figure={'data':[weight_trace], 'layout': weight_layout }, 
-                config={'displayModeBar': False},
+                config={'displayModeBar': True},
                 # config={'modeBarButtonsToRemove': ['pan2d', 'lasso2d']}
                 )
             ])

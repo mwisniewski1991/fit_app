@@ -11,7 +11,8 @@ VALUES (:report_time, :weight, :who)
 
 def import_data() -> pd.DataFrame:
     with sql.connect('data/data.db') as conn:
-        return pd.read_sql(QUERY_SELECT, conn)
+        df = pd.read_sql(QUERY_SELECT, conn)
+        return df
 
 def read_last_date():
     q = 'SELECT MAX(report_time) FROM weight'
@@ -39,7 +40,6 @@ def create_new_data_dict_TEST(weight: float, user: str ='Mateusz') -> dict:
         'who': user
     }
     return new_data
-
 
 def add_new_data(weight: float, user: str ='Mateusz'):
     # new_data_dict = create_new_data_dict(weight, user)
