@@ -59,8 +59,6 @@ def clean_database():
         conn.commit()
     return
 
-
-
 if __name__ == '__main__':
     # clean_database()
     # add_new_data(82.6)

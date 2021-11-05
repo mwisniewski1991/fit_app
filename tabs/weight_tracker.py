@@ -48,25 +48,30 @@ def weight_tracker_frame():
         line_color=colors['white'])
 
     wt = html.Div(className='weightTracker', children=[
-            html.Div(className='inputs', children=[
+            html.Div(className='weightTracker_inputs', children=[
                 html.Span(className='inputs__text', children='Put your current weight.'),
                 dcc.Input(id='weight_input',
-                className='inputs__input',
-                type='number',
-                value=80.2,
-                step=0.1,
+                    className='inputs__input',
+                    type='number',
+                    value=80.2,
+                    step=0.1,
                 ),
-                html.Button(id='weight_button',className='inputs__button', children='Submit')
+                html.Div(className='inputs__buttonConteiner', children=[
+                    html.Button(id='weight_button_add',className='inputs__button', children='Submit'),
+                    html.Button(id='weight_button_remove',className='inputs__button inputs__button--removed', children='Removed last'),
+                ]),
+                
             ]),
 
             html.Div(className='charts', children=[
-            dcc.Graph(id='weight_chart',
-                figure={'data':[weight_trace], 'layout': weight_layout }, 
-                config={'displayModeBar': True},
-                # config={'modeBarButtonsToRemove': ['pan2d', 'lasso2d']}
-                )
+                dcc.Graph(id='weight_chart',
+                    figure={'data':[weight_trace], 'layout': weight_layout }, 
+                    config={'displayModeBar': True},
+                    # config={'modeBarButtonsToRemove': ['pan2d', 'lasso2d']}
+                    )
             ])
         ])
+
     return wt
 
 if __name__ == '__main__':

@@ -24,6 +24,12 @@ HTML Structure
 - header
 - main
     - weightTracker
+        - inputs
+            - span
+            - input
+            - button
+            - button
+        - chart
     - exerciseTracker
 
 
