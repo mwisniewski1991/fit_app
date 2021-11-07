@@ -22,14 +22,16 @@
 
 HTML Structure
 - header
+    - __title
 - main
     - weightTracker
-        - inputs
-            - span
-            - input
-            - button
-            - button
-        - chart
+        - __inputs
+            - __span
+            - __input
+            - __buttoncontainer
+                - __button-add
+                - __button-remove
+        - __chart
     - exerciseTracker
 
 
