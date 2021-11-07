@@ -12,7 +12,6 @@ app.layout = html.Div(children=[
     ]),
     html.Main(className='main', children=[
         weight_tracker_frame(),
-
     ])
 ])
 
@@ -33,24 +32,32 @@ def add_new_weight_data(n_clicks_add, n_clicks_remove, weight):
     print(f'{n_clicks_add=}')
     print(f'{n_clicks_remove=}')
 
-    if n_clicks_add is None and n_clicks_remove is None: 
-        print('Prevent update')
-        raise PreventUpdate
+    # if n_clicks_add is None and n_clicks_remove is None: 
+    #     raise PreventUpdate
 
-    elif n_clicks_remove == 1:
+    if n_clicks_remove == 1:
         print('REMOVED')
 
-    elif n_clicks_add == 1:
-        print('UPDATE')
+    if n_clicks_add == 1:
         data_manager.add_new_data(weight)
 
     weight_df = data_manager.import_data()
-    weight_trace = go.Scatter(
-        x=weight_df['report_time'],
-        y=weight_df['weight'],
-        line_color=colors['white'])
+    
+    q_morning = weight_df['part_of_day'] == 'morning'
+    q_evening = weight_df['part_of_day'] == 'evening'
+    
+    weight_trace_morning = go.Scatter(
+        x=weight_df[q_morning]['report_time'],
+        y=weight_df[q_morning]['weight'],
+        line_color='yellow')
 
-    return {'data': [weight_trace], 'layout': weight_layout}, None, None
+    weight_trace_evening = go.Scatter(
+        x=weight_df[q_evening]['report_time'],
+        y=weight_df[q_evening]['weight'],
+        line_color='blue')
+
+
+    return {'data': [weight_trace_morning, weight_trace_evening], 'layout': weight_layout}, None, None
 
 if __name__ == '__main__':
     app.run_server(debug=True)

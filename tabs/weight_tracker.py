@@ -30,22 +30,19 @@ def weight_tracker_frame():
         'white': 'rgb(255,255,255)',
     }
 
-    weight_layout = {
-            'title': {'text': 'Weight tracker', 'color': colors['white']}, 
-            'font': {'family':'Georama', 'color': colors['white']},
-            'paper_bgcolor': colors['transparent'],
-            'plot_bgcolor': colors['transparent'],
-            'xaxis': {'showline':False, 'gridcolor': colors['grid_color'], 'tickformat': '%Y-%m-%d', 'ticklabelmode': 'period'},
-            'yaxis': {'showline':True, 'gridcolor': colors['grid_color']},
-            'margin_b': 10, 'margin_t': 50, 'margin_r': 10,
-            'margin': {'b': 40, 't': 50, 'r': 50, 'l': 40},
-            'showlegend': False,
-        }
+    q_morning = weight_df['part_of_day'] == 'morning'
+    q_evening = weight_df['part_of_day'] == 'evening'
+    
+    weight_trace_morning = go.Scatter(
+        x=weight_df[q_morning]['report_time'],
+        y=weight_df[q_morning]['weight'],
+        line_color='yellow')
 
-    weight_trace = go.Scatter(
-        x=weight_df['report_time'],
-        y=weight_df['weight'],
-        line_color=colors['white'])
+    weight_trace_evening = go.Scatter(
+        x=weight_df[q_evening]['report_time'],
+        y=weight_df[q_evening]['weight'],
+        line_color='blue')
+
 
     wt = html.Div(className='weightTracker', children=[
             html.Div(className='weightTracker__inputs', children=[
@@ -65,7 +62,7 @@ def weight_tracker_frame():
 
             html.Div(className='weightTracker__charts', children=[
                 dcc.Graph(id='weight_chart',
-                    figure={'data':[weight_trace], 'layout': weight_layout }, 
+                    figure={'data':[weight_trace_morning, weight_trace_evening], 'layout': weight_layout }, 
                     config={'displayModeBar': True},
                     # config={'modeBarButtonsToRemove': ['pan2d', 'lasso2d']}
                     )
