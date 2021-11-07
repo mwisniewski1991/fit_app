@@ -15,7 +15,7 @@ app.layout = html.Div(children=[
 
     ])
 ])
-# Input(component_id='weight_input', component_property='value')
+
 @app.callback(
     [
     Output(component_id='weight_chart', component_property='figure'),
@@ -51,26 +51,6 @@ def add_new_weight_data(n_clicks_add, n_clicks_remove, weight):
         line_color=colors['white'])
 
     return {'data': [weight_trace], 'layout': weight_layout}, None, None
-
-# @app.callback(
-#     Output(component_id='weight_chart', component_property='figure'),
-#     Input(component_id='weight_button_add', component_property='n_clicks'),
-# )
-# def removed_weight_data(n_clicks):
-#     print(n_clicks)
-#     if n_clicks is None:
-#         raise PreventUpdate
-#     else:
-#         data_manager.add_new_data(weight)
-#         weight_df = data_manager.import_data()
-#         weight_trace = go.Scatter(
-#             x=weight_df['report_time'],
-#             y=weight_df['weight'],
-#             line_color=colors['white']
-#         )
-
-#         return {'data': [weight_trace], 'layout': weight_layout}
-
 
 if __name__ == '__main__':
     app.run_server(debug=True)

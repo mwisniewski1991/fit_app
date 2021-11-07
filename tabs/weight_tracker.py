@@ -48,22 +48,22 @@ def weight_tracker_frame():
         line_color=colors['white'])
 
     wt = html.Div(className='weightTracker', children=[
-            html.Div(className='weightTracker_inputs', children=[
-                html.Span(className='inputs__text', children='Put your current weight.'),
+            html.Div(className='weightTracker__inputs', children=[
+                html.Span(className='weightTracker__text', children='Put your current weight.'),
                 dcc.Input(id='weight_input',
-                    className='inputs__input',
+                    className='weightTracker__input',
                     type='number',
                     value=80.2,
                     step=0.1,
                 ),
-                html.Div(className='inputs__buttonConteiner', children=[
-                    html.Button(id='weight_button_add',className='inputs__button', children='Submit'),
-                    html.Button(id='weight_button_remove',className='inputs__button inputs__button--removed', children='Removed last'),
+                html.Div(className='weightTracker__buttoncontainer', children=[
+                    html.Button(id='weight_button_add',className='weightTracker__button', children='Submit'),
+                    html.Button(id='weight_button_remove',className='weightTracker__button weightTracker__button--removed', children='Removed last'),
                 ]),
                 
             ]),
 
-            html.Div(className='charts', children=[
+            html.Div(className='weightTracker__charts', children=[
                 dcc.Graph(id='weight_chart',
                     figure={'data':[weight_trace], 'layout': weight_layout }, 
                     config={'displayModeBar': True},

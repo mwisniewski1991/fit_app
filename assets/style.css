@@ -21,7 +21,7 @@ body{
     font-size: 50px;
 }
 
-.weightTracker_inputs{
+.weightTracker__inputs{
     height: 240px;
     display: flex;
     flex-direction: column;
@@ -29,14 +29,14 @@ body{
     /* border: 2px solid red; */
 }
 
-.inputs__text{
+.weightTracker__text{
     text-align: center;
     padding: 10px;
     width: 400px;
     margin: auto;
 }
 
-.inputs__input{
+.weightTracker__input{
     width: 50%;
     height: 50px;
     margin: auto;
@@ -52,11 +52,11 @@ body{
     text-align: center;
 }
 
-.inputs__input:hover{
+.weightTracker__input:hover{
     background: rgb(121, 116, 116);
 }
 
-.inputs__buttonConteiner{
+.weightTracker__buttoncontainer{
     width: 50%;
     margin: auto;
 
@@ -64,9 +64,7 @@ body{
     justify-content: center;
 }
 
-
-
-.inputs__button{
+.weightTracker__button{
     display: inline-block;
     cursor: pointer;
 
@@ -86,16 +84,16 @@ body{
     
 }
 
-.inputs__button--removed{
+.weightTracker__button--removed{
     color: darkred;
 }
 
-.inputs__button:hover{
+.weightTracker__button:hover{
     background: rgb(121, 116, 116);
 
 }
 
-.inputs__button:active {
+.weightTracker__button:active {
     /* color: blue; */
     /* box-shadow: 4px 4px 1px #000; */
     transform: scale(0.95);
