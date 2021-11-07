@@ -33,30 +33,24 @@ def add_new_weight_data(n_clicks_add, n_clicks_remove, weight):
     print(f'{n_clicks_add=}')
     print(f'{n_clicks_remove=}')
 
-    if n_clicks_add is None or n_clicks_remove is None: 
+    if n_clicks_add is None and n_clicks_remove is None: 
+        print('Prevent update')
         raise PreventUpdate
 
     elif n_clicks_remove == 1:
         print('REMOVED')
-        data_manager.add_new_data(weight)
-        weight_df = data_manager.import_data()
-        weight_trace = go.Scatter(
-            x=weight_df['report_time'],
-            y=weight_df['weight'],
-            line_color=colors['white'])
-
-        return {'data': [weight_trace], 'layout': weight_layout}, None, None
 
     elif n_clicks_add == 1:
-        print(weight)
+        print('UPDATE')
         data_manager.add_new_data(weight)
-        weight_df = data_manager.import_data()
-        weight_trace = go.Scatter(
-            x=weight_df['report_time'],
-            y=weight_df['weight'],
-            line_color=colors['white'])
 
-        return {'data': [weight_trace], 'layout': weight_layout}, None, None
+    weight_df = data_manager.import_data()
+    weight_trace = go.Scatter(
+        x=weight_df['report_time'],
+        y=weight_df['weight'],
+        line_color=colors['white'])
+
+    return {'data': [weight_trace], 'layout': weight_layout}, None, None
 
 # @app.callback(
 #     Output(component_id='weight_chart', component_property='figure'),
