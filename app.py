@@ -7,6 +7,7 @@ import data_manager
 app = dash.Dash(__name__)
 app.title = 'FitApp'
 app.layout = html.Div(children=[
+    dcc.Store(id='local_store', storage_type='local'),
     html.Header(className='header', children=[
         html.H1(className='header__title', children='Fit App')
     ]),
@@ -20,26 +21,28 @@ app.layout = html.Div(children=[
     Output(component_id='weight_chart', component_property='figure'),
     Output(component_id='weight_button_add', component_property='n_clicks'),
     Output(component_id='weight_button_remove', component_property='n_clicks'),
+    Output(component_id='local_store', component_property='data')
     ],
     [
     Input(component_id='weight_button_add', component_property='n_clicks'),
     Input(component_id='weight_button_remove', component_property='n_clicks'),
     ],
-    State(component_id='weight_input', component_property='value')
+    [State(component_id='weight_input', component_property='value'),
+    State(component_id='local_store', component_property='data')
+    ]
 )
-def add_new_weight_data(n_clicks_add, n_clicks_remove, weight):
-    print('-------------')
-    print(f'{n_clicks_add=}')
-    print(f'{n_clicks_remove=}')
+def add_new_weight_data(n_clicks_add, n_clicks_remove, weight, store_data):
 
-    # if n_clicks_add is None and n_clicks_remove is None: 
-    #     raise PreventUpdate
+    if n_clicks_add is None and n_clicks_remove is None: 
+        raise PreventUpdate
 
     if n_clicks_remove == 1:
-        print('REMOVED')
+        if store_data:
+            data_manager.remove_last_register(store_data['report_time'])
+        new_data = {}
 
     if n_clicks_add == 1:
-        data_manager.add_new_data(weight)
+        new_data = data_manager.add_new_data(weight)
 
     weight_df = data_manager.import_data()
     
@@ -56,8 +59,7 @@ def add_new_weight_data(n_clicks_add, n_clicks_remove, weight):
         y=weight_df[q_evening]['weight'],
         line_color='blue')
 
-
-    return {'data': [weight_trace_morning, weight_trace_evening], 'layout': weight_layout}, None, None
+    return {'data': [weight_trace_morning, weight_trace_evening], 'layout': weight_layout}, None, None, new_data
 
 if __name__ == '__main__':
     app.run_server(debug=True)
