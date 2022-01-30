@@ -17,7 +17,7 @@ weight_layout = {
         'yaxis': {'showline':True, 'gridcolor': colors['grid_color']},
         'margin_b': 10, 'margin_t': 50, 'margin_r': 10,
         'margin': {'b': 40, 't': 50, 'r': 50, 'l': 40},
-        'showlegend': False,
+        'legend': {'title_text':'Day time'},
     }
 
 def weight_tracker_frame():

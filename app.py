@@ -52,14 +52,22 @@ def add_new_weight_data(n_clicks_add, n_clicks_remove, weight, store_data):
     weight_trace_morning = go.Scatter(
         x=weight_df[q_morning]['report_time'],
         y=weight_df[q_morning]['weight'],
-        line_color='yellow')
+        line_color='#dee577',
+        name='Morning weight')
 
     weight_trace_evening = go.Scatter(
         x=weight_df[q_evening]['report_time'],
         y=weight_df[q_evening]['weight'],
-        line_color='blue')
-
-    return {'data': [weight_trace_morning, weight_trace_evening], 'layout': weight_layout}, None, None, new_data
+        line_color='#444cdd',
+        name='Evening weight')
+    
+    trace_morning_mean = go.Scatter(
+        x=weight_df[q_morning]['report_time'],
+        y=weight_df[q_morning]['weight_roll_mean'],
+        line_color='#cc020c',
+        name=f'Morning mean weight ({data_manager.ROLLING_PERIODS} days)')
+    
+    return {'data': [weight_trace_morning, weight_trace_evening, trace_morning_mean], 'layout': weight_layout}, None, None, new_data
 
 if __name__ == '__main__':
     app.run_server(debug=True)

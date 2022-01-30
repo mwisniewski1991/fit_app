@@ -12,6 +12,7 @@ VALUES (:id, :report_time, :part_of_day, :weight, :who)
 QUERY_FIND = '''
 SELECT * weight FROM  WHERE report_time
 '''
+ROLLING_PERIODS = 14
 
 def import_data():
     '''
@@ -21,7 +22,8 @@ def import_data():
     '''
     with sql.connect('data/data.db') as conn:
         df = pd.read_sql(QUERY_SELECT, conn, parse_dates=['report_time'])
-        df['report_time'] = df['report_time'].dt.strftime(TIME_FORMAT_SHORT) 
+        df['report_time'] = df['report_time'].dt.strftime(TIME_FORMAT_SHORT)
+        df['weight_roll_mean'] = df['weight'].rolling(ROLLING_PERIODS).mean()
         return df
 
 def create_new_data_dict(weight: float, user: str ='Mateusz'):
@@ -110,8 +112,8 @@ def read_last_date():
         return datetime.strptime(result, TIME_FORMAT) 
 
 if __name__ == '__main__':
-    # print(import_data())
-    print(create_new_data_dict(82.0))
+    print(import_data())
+    # print(create_new_data_dict(82.0))
     # print(add_new_data(82.6))
     # print(import_data())
     # print(read_all_id())
