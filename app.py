@@ -33,9 +33,9 @@ app.layout = html.Div(children=[
 )
 def add_new_weight_data(n_clicks_add, n_clicks_remove, weight, store_data):
 
-    if n_clicks_add is None and n_clicks_remove is None: 
-        raise PreventUpdate
-
+    # if n_clicks_add is None and n_clicks_remove is None: 
+    #     raise PreventUpdate
+    new_data = {}
     if n_clicks_remove == 1:
         if store_data:
             data_manager.remove_last_register(store_data['report_time'])
