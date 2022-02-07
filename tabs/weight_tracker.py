@@ -9,16 +9,17 @@ colors = {
     }
 
 weight_layout = {
-        'title': {'text': 'Weight tracker', 'color': colors['white']}, 
+        'title': {'text': 'Weight tracker', 'color': colors['white'], 'font': {'size':27} }, 
         'font': {'family':'Georama', 'color': colors['white']},
         'paper_bgcolor': colors['transparent'],
         'plot_bgcolor': colors['transparent'],
-        'xaxis': {'showline':False, 'gridcolor': colors['grid_color'], 'tickformat': '%Y-%m-%d', 'ticklabelmode': 'period'},
-        'yaxis': {'showline':True, 'gridcolor': colors['grid_color']},
+        'xaxis': {'showline':False, 'gridcolor': colors['grid_color'], 'tickfont':{'size': 20}, 'tickformat': '%d.%m', 'ticklabelmode': 'period'},
+        'yaxis': {'showline':True, 'gridcolor': colors['grid_color'], 'tickfont':{'size': 20}, 'dtick':0.5},
         'margin_b': 10, 'margin_t': 50, 'margin_r': 10,
-        'margin': {'b': 40, 't': 50, 'r': 50, 'l': 40},
-        'legend': {'title_text':'Day time'},
+        'margin': {'b': 40, 't': 50, 'r': 50, 'l': 60},
+        'legend': {'title': {'text':'Day time'}, 'font': {'size':14} },
     }
+
 
 def weight_tracker_frame():
 
